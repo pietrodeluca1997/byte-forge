@@ -4,8 +4,8 @@ setlocal EnableDelayedExpansion
 set OUTPUT_PATH=..\..\..\Build
 set OBJECT_PATH=%OUTPUT_PATH%\intermediate
 set EXECUTABLE_NAME=%OUTPUT_PATH%\TopDownShooter.exe
-set INCLUDE_FLAGS=-I..\include -I..\source
-set LINKER_FLAGS=
+set INCLUDE_FLAGS=-I..\include -I..\source -I..\..\..\Libraries\SDL2\include
+set LINKER_FLAGS=-L..\..\..\Libraries\SDL2\libraries -lSDL2.lib -lSDL2main.lib
 set COMPILER_FLAGS=-g -Wall
 set OBJECT_FILES=
 
