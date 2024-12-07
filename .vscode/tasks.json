@@ -1,0 +1,35 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build Top Down Shooter",
+            "windows": {
+                "command": "${workspaceFolder}/Apps/TopDownShooter/scripts/Build.bat",
+                "args": []
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/Apps/TopDownShooter/scripts"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "Run Dr. Memory On Top Down Shooter .exe",
+            "windows": {
+                "command": "drmemory TopDownShooter.exe",
+                "args": []
+            },
+            "options": {
+                "cwd": "${workspaceFolder}/Build"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        }
+    ],
+    "version": "2.0.0"
+}

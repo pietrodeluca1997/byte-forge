@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Top Down Shooter",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/Build/TopDownShooter.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/Build/",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask": "Build Top Down Shooter"
+        }
+    ]
+}

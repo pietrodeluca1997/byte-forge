@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "name": "ECS",
+            "includePath": [],
+            "defines": [],            
+            "compilerPath": "C:/Program Files/LLVM/bin/clang.exe",
+            "cStandard": "c99",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
