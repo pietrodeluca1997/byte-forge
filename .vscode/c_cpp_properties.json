@@ -3,6 +3,7 @@
         {
             "name": "ECS",
             "includePath": [
+                "${workspaceFolder}/Modules/Platform/include",
                 "${workspaceFolder}/Libraries/SDL2/include"
             ],
             "defines": [],            

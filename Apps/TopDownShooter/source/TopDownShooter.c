@@ -1,87 +1,59 @@
 #define SDL_MAIN_HANDLED
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <memory.h>
-
 #include <SDL.h>
 
-typedef struct SDL_Properties
+#include <stdio.h>
+
+#include "PlatformContext.h"
+#include "PlatformWindow.h"
+#include "PlatformRenderer.h"
+
+const int APPLICATION_WINDOW_WIDTH = 800;
+const int APPLICATION_WINDOW_HEIGHT = 600;
+
+int main()
 {
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-} SDL_Properties;
-
-bool SDL_Initialize(SDL_Properties* out_sdl_properties);
-void SDL_Free(SDL_Properties* sdl_properties);
-
-bool SDL_Initialize(SDL_Properties* out_sdl_properties)
-{
-    SDL_Properties sdl_properties = {};
-    memset(&sdl_properties, 0, sizeof(SDL_Properties));
-    
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    if (!PlatformContext_Initialize(SDL_INIT_VIDEO))
     {
-        fprintf(stderr, "Couldn't initialize SDL: %s\n", SDL_GetError());
-        return false;
-    }
-
-    int sdl_window_flags = 0;
-
-    sdl_properties.window = SDL_CreateWindow("Top Down Shooter", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, sdl_window_flags);
-
-    if (!sdl_properties.window)
-    {
-        fprintf(stderr, "Couldn't create SDL window: %s\n", SDL_GetError());
-        SDL_Free(&sdl_properties);
-        return false;
-    }
-
-    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-
-    int sdl_renderer_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
-
-    sdl_properties.renderer = SDL_CreateRenderer(sdl_properties.window, -1, sdl_renderer_flags);
-
-    if (!sdl_properties.renderer)
-    {
-        fprintf(stderr, "Couldn't create SDL renderer: %s\n", SDL_GetError());
-        SDL_Free(&sdl_properties);
-        return false;
-    }
-
-    return true;
-}
-
-void SDL_Free(SDL_Properties* out_sdl_properties)
-{
-    if (!out_sdl_properties) return;
-    
-    if (out_sdl_properties->renderer)
-    {
-        SDL_DestroyRenderer(out_sdl_properties->renderer);
-    }
-
-    if (out_sdl_properties->window)
-    {
-        SDL_DestroyWindow(out_sdl_properties->window);
-    }
-
-    SDL_Quit();
-}
-
-int main(int argc, char** argv)
-{
-    SDL_Properties sdl_properties = {};
-
-    if (!SDL_Initialize(&sdl_properties))
-    {
+        fprintf(stderr, "Couldn't initialize platform context: %s", PlatformContext_GetLastError());
         return EXIT_FAILURE;
     }
 
+    PlatformWindow platform_window = 
+    {
+        .window_width = APPLICATION_WINDOW_WIDTH,
+        .window_height = APPLICATION_WINDOW_HEIGHT,
+        .window_title = "Top Down Shooter",
+        .window_bitflags = 0
+    };
 
-    SDL_Free(&sdl_properties);
+    if (!PlatformWindow_New(&platform_window))
+    {
+        fprintf(stderr, "Couldn't create platform window: %s", PlatformContext_GetLastError());
+        return EXIT_FAILURE;
+    }
+
+    PlatformRenderer platform_renderer = 
+    {
+        .renderer_bitflags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+    };
+
+    if (!PlatformRenderer_New(&platform_renderer, &platform_window))
+    {
+        fprintf(stderr, "Couldn't create platform RENDERER: %s", PlatformContext_GetLastError());
+        return EXIT_FAILURE;
+    }
+
+    while (PlatformContext_PollThreadEvents())
+    {
+        PlatformContext_SetDrawColor(&platform_renderer, 0, 0, 255, 255);
+        PlatformContext_ClearBackBuffer(&platform_renderer);
+        PlatformContext_Render(&platform_renderer);
+    }
+
+    PlatformRenderer_Free(&platform_renderer);
+    PlatformWindow_Free(&platform_window);
+    PlatformContext_Free();
 
     return EXIT_SUCCESS;
 }
