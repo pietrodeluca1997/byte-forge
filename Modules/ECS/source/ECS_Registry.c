@@ -93,7 +93,7 @@ void ECS_Registry_PublishEntity(ECS_Registry *registry, ECS_Entity entity)
     {
         ECS_System* system = ECS_Vector_Get(registry->systems, i);
         
-        if(system->required_entity_components_bitset & *entity_component_bitset)
+        if((system->required_entity_components_bitset & *entity_component_bitset) == system->required_entity_components_bitset)
         {
             ECS_Vector_Add(system->entities, &entity);
         }
