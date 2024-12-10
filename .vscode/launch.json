@@ -2,16 +2,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Top Down Shooter",
+            "name": "Launch Pong",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/Build/TopDownShooter.exe",
+            "program": "${workspaceRoot}/Build/Pong.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/Build/",
             "environment": [],
             "console": "integratedTerminal",
-            "preLaunchTask": "Build Top Down Shooter"
+            "preLaunchTask": "Build Pong"
         }
     ]
 }

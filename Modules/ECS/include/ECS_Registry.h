@@ -19,6 +19,5 @@ bool ECS_Registry_RegisterComponentType(ECS_Registry* registry, size_t component
 bool ECS_Registry_AddComponentToEntity(ECS_Registry* registry, ECS_ComponentType component_type, void* component, ECS_Entity entity);
 bool ECS_Registry_CreateSystem(ECS_Registry* registry, ECS_System* out_system);
 void ECS_Registry_PublishEntity(ECS_Registry* registry, ECS_Entity entity);
-void ECS_Registry_Init(ECS_Registry* registry);
 void ECS_Registry_Update(ECS_Registry* registry);
 void ECS_Registry_Free(ECS_Registry** registry);

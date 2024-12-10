@@ -1,4 +1,5 @@
 #include "PlatformContext.h"
+
 #include <SDL.h>
 
 bool PlatformContext_Initialize(uint64_t initialization_bitflags)
@@ -6,7 +7,7 @@ bool PlatformContext_Initialize(uint64_t initialization_bitflags)
     return SDL_Init(initialization_bitflags) == 0;
 }
 
-bool PlatformContext_PollThreadEvents()
+bool PlatformContext_PollThreadEvents(PlatformInputSystem* input_system)
 {
     SDL_Event sdl_event;
 
@@ -18,6 +19,8 @@ bool PlatformContext_PollThreadEvents()
                 return false;
         }
     }
+
+    input_system->keyboard_state = (uint8_t*) SDL_GetKeyboardState(NULL);
 
     return true;
 }
@@ -37,7 +40,7 @@ void PlatformContext_ClearBackBuffer(const PlatformRenderer *platform_renderer)
     SDL_RenderClear((SDL_Renderer*) platform_renderer->renderer_data);
 }
 
-void PlatformContext_Render(const PlatformRenderer *platform_renderer)
+void PlatformContext_SwapBuffer(const PlatformRenderer *platform_renderer)
 {
     SDL_RenderPresent((SDL_Renderer*) platform_renderer->renderer_data);
 }

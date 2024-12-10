@@ -2,13 +2,13 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "Build Top Down Shooter",
+            "label": "Build Pong",
             "windows": {
-                "command": "${workspaceFolder}/Apps/TopDownShooter/scripts/Build.bat",
+                "command": "${workspaceFolder}/Apps/Pong/scripts/Build.bat",
                 "args": []
             },
             "options": {
-                "cwd": "${workspaceFolder}/Apps/TopDownShooter/scripts"
+                "cwd": "${workspaceFolder}/Apps/Pong/scripts"
             },
             "problemMatcher": [
                 "$gcc"
@@ -17,9 +17,9 @@
         },
         {
             "type": "shell",
-            "label": "Run Dr. Memory On Top Down Shooter .exe",
+            "label": "Run Dr. Memory On Pong .exe",
             "windows": {
-                "command": "drmemory TopDownShooter.exe",
+                "command": "drmemory Pong.exe",
                 "args": []
             },
             "options": {

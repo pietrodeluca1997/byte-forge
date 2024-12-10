@@ -8,7 +8,7 @@
 typedef struct PlatformRenderer
 {
     void* renderer_data;
-    uint64_t renderer_bitflags;    
+    uint64_t renderer_bitflags;
 } PlatformRenderer;
 
 bool PlatformRenderer_New(PlatformRenderer* out_platform_renderer, PlatformWindow* platform_window);

@@ -1,4 +1,5 @@
 #include "ECS_Registry.h"
+
 #include <stdlib.h>
 
 bool ECS_Registry_New(ECS_Registry** out_registry)
@@ -68,14 +69,13 @@ bool ECS_Registry_AddComponentToEntity(ECS_Registry* registry, ECS_ComponentType
 
 bool ECS_Registry_CreateSystem(ECS_Registry *registry, ECS_System* out_system)
 {
-    if(!registry || !out_system || !out_system->Init || !out_system->Update) return false;
+    if(!registry || !out_system || !out_system->Update) return false;
 
     ECS_System system = { registry->systems->element_count };
     ECS_Vector_New(sizeof(ECS_Entity), &system.entities);
     system.required_entity_components_bitset = out_system->required_entity_components_bitset;
-    system.Init = out_system->Init;
     system.Update = out_system->Update;
-    system.data = out_system->data;
+    system.inner_system_data = out_system->inner_system_data;
     
     if (ECS_Vector_Add(registry->systems, &system))
     {        
@@ -97,15 +97,6 @@ void ECS_Registry_PublishEntity(ECS_Registry *registry, ECS_Entity entity)
         {
             ECS_Vector_Add(system->entities, &entity);
         }
-    }
-}
-
-void ECS_Registry_Init(ECS_Registry *registry)
-{
-    for (uint64_t i = 0; i < registry->systems->element_count; i++)
-    {
-        ECS_System* system = ECS_Vector_Get(registry->systems, i);
-        system->Init();
     }
 }
 
